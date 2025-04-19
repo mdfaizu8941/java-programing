@@ -1,0 +1,8 @@
+/*2. Create a class MyCalculator which consists of a single method power(int, int).This method takes two integers, n and p, as parameters and finds n^p.
+If either n or p is negative, then the method must throw an exception which says "n and 
+p should be non-negative". 
+Input Format 
+Each line of the input contains two integers, n and p . 
+Output Format 
+Each line of the output contains the result ,if neither of n and p is negative. 
+Otherwise the output contains "n and p should be non-negative".*/
