@@ -6,3 +6,39 @@ Each line of the input contains two integers, n and p .
 Output Format 
 Each line of the output contains the result ,if neither of n and p is negative. 
 Otherwise the output contains "n and p should be non-negative".*/
+import java.util.*;
+class Calculator{
+    int n,p;
+   public Calculator(int n,int p)
+    {
+        this.n=n;
+        this.p=p;
+    }
+    public void pow()throws Exception
+    {
+       
+            if(n<0|| p<0)
+            {
+                throw new Exception("n and p should be non-negetive");
+            }
+        System.out.println(Math.pow(n,p));
+    }
+}
+public class User{
+    public static void main(String[]st)
+    {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("input n and p");
+        int n=sc.nextInt();
+        int p=sc.nextInt();
+        Calculator ob= new Calculator(n,p);
+        try{
+          ob.pow();
+        }
+        catch (Exception ae)
+        {
+            System.out.println(ae.toString());
+        }
+        sc.close();
+    }
+}
