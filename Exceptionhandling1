@@ -7,3 +7,50 @@ inputs incomplete or incorrect data. The entered value should meet the following
 If the above conditions are not met then the application should raise specific exception else 
 should complete normal execution.
 */
+import java.util.*;
+class MyException extends Exception {
+    public MyException(String m) {
+        super(m);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        try {
+                System.out.println("Enter name:");
+             String name = sc.nextLine();
+            if (!Character.isUpperCase(name.charAt(0))) {
+                throw new MyException("First letter is not capital");
+            }
+            System.out.println(name);
+
+            System.out.println("Enter id(should be greater then 2001 & less then 5000");
+        int Eid=sc.nextInt();
+             if(Eid<2001 || Eid >5001)
+             {
+                 throw new MyException("Employe id should be greater then 2001 & less then 5000");
+             }
+            System.out.println(Eid);
+            
+           System.out.println("Input department id(>1 & <5)");
+           int d=sc.nextInt();
+           if(d<1 ||d >5)
+             {
+                 throw new MyException("Department id should be greater then 1 & less then 5");
+             }
+            System.out.println(d);
+        }
+           catch (MyException ne) {
+            System.out.println(ne.getMessage());
+            System.out.println("Error");
+        }
+        catch (Exception n)
+        {
+            System.out.println("invalid deatils");
+        }
+ 
+            sc.close();
+       
+    }
+}
