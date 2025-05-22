@@ -1,0 +1,100 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.sql.*;
+
+public class AI extends JFrame implements ActionListener {
+    JTextField sal, name, code, des;
+    JButton submit, reset, exit;
+    JLabel l1, l2, l3, l4;
+    JPanel p;
+
+    public AI() {
+        setTitle("AI");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(400, 400);
+        setResizable(true);
+
+        p = new JPanel();
+        p.setLayout(new GridLayout(5, 2, 5, 5));
+
+        l1 = new JLabel("Name:");
+        name = new JTextField(20);
+
+        l2 = new JLabel("Code:");
+        code = new JTextField(20);
+
+        l3 = new JLabel("Designation:");
+        des = new JTextField(20);
+
+        l4 = new JLabel("Salary:");
+        sal = new JTextField(20);
+
+        submit = new JButton("Submit");
+        reset = new JButton("Reset");
+        exit = new JButton("Exit");
+
+        submit.addActionListener(this);
+        reset.addActionListener(this);
+        exit.addActionListener(this);
+
+        p.add(l1); p.add(name);
+        p.add(l2); p.add(code);
+        p.add(l3); p.add(des);
+        p.add(l4); p.add(sal);
+        p.add(submit); p.add(reset);
+        p.add(exit);
+
+        add(p);
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == submit) {
+            String n = name.getText();
+            String c = code.getText();
+            String d = des.getText();
+            double s;
+
+            try {
+                s = Double.parseDouble(sal.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Invalid salary input.");
+                return;
+            }
+
+            String url = "jdbc:mysql://localhost:3306/AI";
+            String user = "root";
+            String password = "12345";
+
+            String query = "INSERT INTO Employee (Name, Code, Salary, Designation) VALUES (?, ?, ?, ?)";
+
+            try (Connection conn = DriverManager.getConnection(url, user, password);
+                 PreparedStatement stmt = conn.prepareStatement(query)) {
+
+                stmt.setString(1, n);
+                stmt.setString(2, c);
+                stmt.setDouble(3, s);
+                stmt.setString(4, d);
+
+                stmt.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Data Inserted Successfully");
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage());
+            }
+        } else if (e.getSource() == reset) {
+            name.setText("");
+            code.setText("");
+            des.setText("");
+            sal.setText("");
+        } else if (e.getSource() == exit) {
+            System.exit(0);
+        }
+    }
+
+    public static void main(String[] args) {
+        new AI();
+    }
+}
